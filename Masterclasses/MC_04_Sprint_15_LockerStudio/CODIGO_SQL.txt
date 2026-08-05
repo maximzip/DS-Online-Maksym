@@ -1,0 +1,103 @@
+-- 1) Tabla: proveedor
+CREATE OR REPLACE TABLE `prueba-negocio-2.comercial.proveedor` (
+  proveedor_id INT64,
+  nombre STRING,
+  direccion STRING,
+  ciudad STRING,
+  provincia STRING
+);
+
+INSERT INTO `prueba-negocio-2.comercial.proveedor` (proveedor_id, nombre, direccion, ciudad, provincia)
+VALUES
+  (1, 'Proveedor A', 'Calle Bartolo 1', 'Madrid', 'Madrid'),
+  (2, 'Proveedor B', 'Av. Segismundo 45', 'Barcelona', 'Cataluña');
+
+
+-- 2) Tabla: categoria
+CREATE OR REPLACE TABLE `prueba-negocio-2.comercial.categoria` (
+  categoria_id INT64,
+  nombre STRING
+);
+
+INSERT INTO `prueba-negocio-2.comercial.categoria` (categoria_id, nombre)
+VALUES
+  (1, 'Electrónica'),
+  (2, 'Mecánica');
+
+
+-- 3) Tabla: pieza
+CREATE OR REPLACE TABLE `prueba-negocio-2.comercial.pieza` (
+  pieza_id INT64,
+  nombre STRING,
+  color STRING,
+  precio_coste FLOAT64,
+  precio_publico FLOAT64,
+  categoria_id INT64
+);
+
+INSERT INTO `prueba-negocio-2.comercial.pieza` (pieza_id, nombre, color, precio_coste, precio_publico, categoria_id)
+VALUES
+  (1, 'Resistor', 'Rojo', 0.10, 0.25, 1),
+  (2, 'Tornillo', 'Plateado', 0.05, 0.15, 2);
+
+
+-- 4) Tabla: suministro
+CREATE OR REPLACE TABLE `prueba-negocio-2.comercial.suministro` (
+  suministro_id INT64,
+  proveedor_id INT64,
+  pieza_id INT64,
+  cantidad INT64,
+  fecha DATE
+);
+
+INSERT INTO `prueba-negocio-2.comercial.suministro` (suministro_id, proveedor_id, pieza_id, cantidad, fecha)
+VALUES
+  (1, 1, 1, 1000, DATE('2025-11-01')),
+  (2, 2, 2, 500, DATE('2025-11-15')),
+  (3, 1, 2, 200, DATE('2025-11-20'));
+
+
+-- 5) Tabla: cliente
+CREATE OR REPLACE TABLE `prueba-negocio-2.comercial.cliente` (
+  cliente_id INT64,
+  nombre STRING,
+  email STRING,
+  telefono STRING,
+  direccion STRING
+);
+
+INSERT INTO `prueba-negocio-2.comercial.cliente` (cliente_id, nombre, email, telefono, direccion)
+VALUES
+  (1, 'Carlos Mendoza', 'carlos.m@email.com', '600123456', 'Calle Gran Vía 12, Madrid'),
+  (2, 'Ana Silva', 'ana.silva@email.com', '611987654', 'Av. Diagonal 432, Barcelona');
+
+
+-- 6) Tabla: pedido
+CREATE OR REPLACE TABLE `prueba-negocio-2.comercial.pedido` (
+  pedido_id INT64,
+  cliente_id INT64,
+  fecha DATE
+);
+
+INSERT INTO `prueba-negocio-2.comercial.pedido` (pedido_id, cliente_id, fecha)
+VALUES
+  (1, 1, DATE('2026-02-10')),
+  (2, 2, DATE('2026-02-12')),
+  (3, 1, DATE('2026-02-15'));
+
+
+-- 7) Tabla: lineapedido
+CREATE OR REPLACE TABLE `prueba-negocio-2.comercial.lineapedido` (
+  linea_id INT64,
+  pedido_id INT64,
+  pieza_id INT64,
+  cantidad INT64,
+  subtotal FLOAT64
+);
+
+INSERT INTO `prueba-negocio-2.comercial.lineapedido` (linea_id, pedido_id, pieza_id, cantidad, subtotal)
+VALUES
+  (1, 1, 1, 100, 25.00),
+  (2, 1, 2, 50, 7.50),
+  (3, 2, 2, 200, 30.00),
+  (4, 3, 1, 10, 2.50);
