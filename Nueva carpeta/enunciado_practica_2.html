@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Práctica — Masterclass Data Science</title>
+<style>
+  :root {
+    --navy: #1A3A6B; --orange: #D35400; --teal: #0E6655;
+    --lgray: #F8F9FA; --dark: #1C2833; --gray: #626567;
+    --lnavy: #D6E4F7; --lteal: #D5F5E3; --lorange: #FDEBD0;
+    --accent: #C0392B; --laccent: #FDEDEC;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Segoe UI', Arial, sans-serif; background: #F4F6F8; color: var(--dark); }
+
+  /* HEADER */
+  .header { background: var(--navy); color: white; padding: 0; }
+  .header-inner { max-width: 900px; margin: 0 auto; padding: 40px 32px 32px; }
+  .header-tag { color: var(--orange); font-size: 11px; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 12px; }
+  .header h1 { font-size: 34px; font-weight: 700; line-height: 1.2; margin-bottom: 10px; }
+  .header .subtitle { font-size: 17px; color: #A0B4CC; font-style: italic; margin-bottom: 24px; }
+  .meta-row { display: flex; gap: 28px; flex-wrap: wrap; }
+  .meta-item { font-size: 13px; color: #A0B4CC; }
+  .meta-item strong { color: white; margin-right: 4px; }
+  .orange-bar { height: 5px; background: var(--orange); }
+
+  /* CONTENT */
+  .content { max-width: 900px; margin: 0 auto; padding: 36px 32px 60px; }
+
+  /* SECTIONS */
+  section { margin-bottom: 36px; }
+  h2 { font-size: 20px; color: var(--navy); font-weight: 700; margin-bottom: 14px; padding-bottom: 8px; border-bottom: 2px solid var(--lnavy); }
+  h3 { font-size: 15px; color: var(--orange); font-weight: 700; margin: 18px 0 8px; text-transform: uppercase; letter-spacing: 0.5px; }
+  p { font-size: 14px; line-height: 1.75; color: var(--dark); margin-bottom: 10px; }
+
+  /* CALLOUT BOXES */
+  .box { border-radius: 4px; padding: 16px 20px; margin: 16px 0; border-left: 5px solid; }
+  .box-navy  { background: var(--lnavy);  border-color: var(--navy);   }
+  .box-orange{ background: var(--lorange);border-color: var(--orange);  }
+  .box-teal  { background: var(--lteal);  border-color: var(--teal);   }
+  .box-accent{ background: var(--laccent);border-color: var(--accent);  }
+  .box-label { font-size: 11px; font-weight: 700; text-transform: uppercase; letter-spacing: 1px; margin-bottom: 6px; }
+  .box-navy .box-label  { color: var(--navy);   }
+  .box-orange .box-label{ color: var(--orange); }
+  .box-teal .box-label  { color: var(--teal);   }
+  .box-accent .box-label{ color: var(--accent); }
+  .box p { margin: 0; font-size: 13.5px; }
+
+  /* TABLE */
+  table { width: 100%; border-collapse: collapse; font-size: 13.5px; margin: 12px 0; }
+  thead tr { background: var(--navy); color: white; }
+  thead th { padding: 10px 14px; text-align: left; font-weight: 600; }
+  tbody tr:nth-child(even) { background: var(--lgray); }
+  tbody td { padding: 9px 14px; border-bottom: 1px solid #E0E0E0; }
+  tbody td:first-child { font-family: 'Courier New', monospace; font-size: 12.5px; color: var(--teal); font-weight: 600; }
+
+  /* FEATURE GRID */
+  .feat-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin: 12px 0; }
+  .feat-card { background: white; border: 1px solid #DDD; border-radius: 4px; padding: 12px 16px; }
+  .feat-card .name { font-family: 'Courier New', monospace; font-size: 12px; color: var(--teal); font-weight: 700; }
+  .feat-card .desc { font-size: 12.5px; color: var(--gray); margin-top: 4px; }
+
+  /* PARTS */
+  .part { background: white; border: 1px solid #DDD; border-radius: 6px; margin-bottom: 16px; overflow: hidden; }
+  .part-header { background: var(--lgray); padding: 12px 20px; display: flex; align-items: center; gap: 12px; border-bottom: 1px solid #DDD; }
+  .part-num { background: var(--navy); color: white; width: 28px; height: 28px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; flex-shrink: 0; }
+  .part-title { font-size: 15px; font-weight: 700; color: var(--navy); }
+  .part-time { margin-left: auto; font-size: 12px; color: var(--orange); font-weight: 700; background: var(--lorange); padding: 3px 10px; border-radius: 12px; }
+  .part-body { padding: 16px 20px; }
+  .part-body ul { padding-left: 20px; }
+  .part-body li { font-size: 13.5px; line-height: 1.7; color: var(--dark); }
+  .part-body li strong { color: var(--navy); }
+
+  /* ENTREGABLE */
+  .entregable { background: var(--navy); color: white; border-radius: 6px; padding: 20px 24px; margin-top: 24px; }
+  .entregable h3 { color: var(--orange); margin-top: 0; font-size: 13px; }
+  .entregable ul { padding-left: 20px; margin-top: 8px; }
+  .entregable li { font-size: 13.5px; color: #D0DCE8; line-height: 1.8; }
+
+  /* CODE */
+  code { background: #F0F0F0; font-family: 'Courier New', monospace; font-size: 12px; padding: 2px 6px; border-radius: 3px; color: var(--teal); }
+
+  /* FOOTER */
+  footer { text-align: center; font-size: 12px; color: var(--gray); padding: 24px; border-top: 1px solid #DDD; margin-top: 24px; }
+</style>
+</head>
+<body>
+
+<div class="header">
+  <div class="header-inner">
+    <div class="header-tag">Masterclass en Data Science · Ejercicio Práctico</div>
+    <h1>Predicción de Churn Bancario<br>con Machine Learning</h1>
+    <p class="subtitle">Del análisis exploratorio al modelo explicable en producción</p>
+    <div class="meta-row">
+      <div class="meta-item"><strong>Herramientas:</strong> Python · pandas · scikit-learn · XGBoost · SHAP</div>
+    </div>
+  </div>
+  <div class="orange-bar"></div>
+</div>
+
+<div class="content">
+
+  <!-- CONTEXTO -->
+  <section>
+    <h2>1. Contexto del problema</h2>
+    <p>
+      Un banco retail europeo opera en Francia, Alemania y España con más de 10.000 clientes activos.
+      En los últimos trimestres, la tasa de abandono (<em>churn</em>) ha aumentado un 3 % y el coste
+      de captación de un nuevo cliente es diez veces superior al de retención. El departamento de
+      Marketing necesita identificar, con <strong>al menos 30 días de antelación</strong>, qué clientes
+      tienen alta probabilidad de cancelar su cuenta, para activar campañas de retención dirigidas.
+    </p>
+    <p>
+      Tu rol es el de Data Scientist responsable de construir un modelo predictivo end-to-end:
+      desde la exploración del dataset hasta la generación de una lista priorizada de clientes en riesgo
+      con explicación de los factores determinantes para cada uno.
+    </p>
+
+    <div class="box box-orange">
+      <div class="box-label">💬 Formulación del problema</div>
+      <p>
+        <strong>Input:</strong> características socioeconómicas y de comportamiento bancario del cliente.<br>
+        <strong>Output:</strong> probabilidad de churn en los próximos 30 días (clasificación binaria).<br>
+        <strong>Umbral de acción:</strong> clientes con P(churn) &gt; 0.40 reciben oferta de retención (coste: 20€, valor esperado: 180€).<br>
+        <strong>Métrica principal:</strong> AUC-ROC + Recall (minimizar los falsos negativos es prioritario).
+      </p>
+    </div>
+  </section>
+
+  <!-- DATASET -->
+  <section>
+    <h2>2. Dataset</h2>
+    <p>
+      El dataset <code>bank_churn.csv</code> contiene <strong>10.000 registros</strong> de clientes con las
+      siguientes variables. El dataset ha sido generado sintéticamente para esta práctica pero replica
+      las distribuciones del dataset público de referencia. <strong>Contiene errores y valores faltantes
+      intencionales</strong> para que practiques la fase de limpieza.
+    </p>
+
+    <table>
+      <thead>
+        <tr><th>Variable</th><th>Tipo</th><th>Descripción</th><th>Rango / Valores</th></tr>
+      </thead>
+      <tbody>
+        <tr><td>customer_id</td><td>Identificador</td><td>ID único del cliente</td><td>15xxxxxx</td></tr>
+        <tr><td>credit_score</td><td>Numérico</td><td>Puntuación crediticia</td><td>300–850</td></tr>
+        <tr><td>country</td><td>Categórico</td><td>País de residencia</td><td>France, Germany, Spain</td></tr>
+        <tr><td>gender</td><td>Categórico</td><td>Género del cliente</td><td>Male, Female</td></tr>
+        <tr><td>age</td><td>Numérico</td><td>Edad en años</td><td>18–92</td></tr>
+        <tr><td>tenure</td><td>Numérico</td><td>Años como cliente del banco</td><td>0–10</td></tr>
+        <tr><td>balance</td><td>Numérico</td><td>Saldo en cuenta (€)</td><td>0 – 250.000</td></tr>
+        <tr><td>num_products</td><td>Numérico</td><td>Número de productos contratados</td><td>1–4</td></tr>
+        <tr><td>has_credit_card</td><td>Binario</td><td>Tiene tarjeta de crédito</td><td>0 / 1</td></tr>
+        <tr><td>is_active_member</td><td>Binario</td><td>Miembro activo en últimos 6 meses</td><td>0 / 1</td></tr>
+        <tr><td>estimated_salary</td><td>Numérico</td><td>Salario estimado anual (€)</td><td>0 – 200.000</td></tr>
+        <tr><td>churned</td><td>Target (binario)</td><td>Abandonó el banco (1 = sí)</td><td>0 / 1 (~20% positivos)</td></tr>
+      </tbody>
+    </table>
+
+    <div class="box box-accent">
+      <div class="box-label">⚠️ Errores introducidos intencionalmente</div>
+      <p>
+        El dataset contiene: valores nulos en <code>credit_score</code> y <code>age</code> (~5%),
+        duplicados parciales (~50 filas), valores imposibles en <code>age</code> (algunos &gt;100),
+        variantes de texto en <code>country</code> ("france", "FRANCE") y
+        valores negativos en <code>balance</code> (errores de entrada).
+        Parte del ejercicio es detectarlos y tratarlos correctamente.
+      </p>
+    </div>
+  </section>
+
+  <!-- PARTES -->
+  <section>
+    <h2>3. Estructura del ejercicio</h2>
+
+    <div class="part">
+      <div class="part-header">
+        <div class="part-num">1</div>
+        <div class="part-title">Carga, inspección y calidad del dato</div>
+      </div>
+      <div class="part-body">
+        <ul>
+          <li>Carga el dataset y realiza una inspección inicial completa (<code>shape</code>, <code>dtypes</code>, <code>describe</code>, <code>info</code>).</li>
+          <li>Genera un <strong>reporte de calidad</strong>: nulos por columna (% y absoluto), duplicados, tipos incorrectos.</li>
+          <li>Identifica y corrige los errores introducidos: normaliza <code>country</code>, elimina duplicados, trata valores imposibles en <code>age</code> y <code>balance</code>.</li>
+          <li><strong>Documenta</strong> cada transformación: cuántos registros afecta y por qué decides ese tratamiento.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="part-header">
+        <div class="part-num">2</div>
+        <div class="part-title">EDA — Análisis exploratorio</div>
+      </div>
+      <div class="part-body">
+        <ul>
+          <li>Analiza la distribución de la variable objetivo: ¿hay desbalance de clases? ¿Qué implica para el modelado?</li>
+          <li>Compara las distribuciones de las variables numéricas entre clientes que se fueron y los que se quedaron (boxplots o violinplots).</li>
+          <li>Calcula el <strong>churn rate por segmento</strong>: por <code>country</code>, por <code>num_products</code>, por rango de edad.</li>
+          <li>Construye una <strong>matriz de correlación</strong> e identifica las variables más relacionadas con <code>churned</code>.</li>
+          <li><strong>Extrae al menos 3 insights accionables</strong> del EDA que justifiquen las features que crearás en el paso siguiente.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="part-header">
+        <div class="part-num">3</div>
+        <div class="part-title">Feature Engineering</div>
+      </div>
+      <div class="part-body">
+        <ul>
+          <li>Crea al menos <strong>3 features nuevas</strong> justificadas por el EDA. Sugerencias (no obligatorias):
+            <ul>
+              <li><code>balance_per_product</code> = balance / num_products</li>
+              <li><code>is_zero_balance</code> = 1 si balance == 0</li>
+              <li><code>age_group</code> = tramos de edad (joven / adulto / senior)</li>
+              <li><code>wealth_score</code> = balance + estimated_salary</li>
+            </ul>
+          </li>
+          <li>Construye un <strong>Pipeline de scikit-learn</strong> con <code>ColumnTransformer</code> que diferencie el tratamiento de variables numéricas y categóricas.</li>
+          <li>Asegúrate de que el Pipeline evita cualquier forma de <strong>data leakage</strong>.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="part-header">
+        <div class="part-num">4</div>
+        <div class="part-title">Modelado y validación</div>
+      </div>
+      <div class="part-body">
+        <ul>
+          <li>Integra un clasificador (<strong>XGBoost</strong> o <strong>LightGBM</strong>) al final del Pipeline.</li>
+          <li>Evalúa con <strong>Stratified K-Fold CV</strong> (k=5). Reporta: AUC-ROC, F1, Recall y Precision.</li>
+          <li>Realiza un <strong>split final</strong> 80/20, entrena el Pipeline completo y evalúa sobre el test set.</li>
+          <li>Genera la <strong>curva ROC</strong> y la <strong>curva Precision-Recall</strong>. Justifica el umbral de decisión elegido (0.40 por defecto del negocio — ¿lo confirmas o propones otro?).</li>
+          <li><strong>Bonus:</strong> usa <code>optuna</code> para optimizar al menos 3 hiperparámetros del modelo.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="part">
+      <div class="part-header">
+        <div class="part-num">5</div>
+        <div class="part-title">Explicabilidad con SHAP</div>
+      </div>
+      <div class="part-body">
+        <ul>
+          <li>Calcula los <strong>SHAP values</strong> del modelo sobre el test set.</li>
+          <li>Genera el <strong>SHAP Summary Plot</strong> e interpreta: ¿cuáles son las 5 variables más influyentes? ¿En qué dirección?</li>
+          <li>Selecciona <strong>2 clientes concretos</strong> (uno con alta probabilidad de churn, otro con baja) y genera un <strong>SHAP Force Plot</strong> para cada uno. Explica con palabras por qué el modelo predice lo que predice para cada cliente.</li>
+          <li>Traduce los resultados a <strong>lenguaje de negocio</strong>: ¿qué perfil de cliente tiene mayor riesgo? ¿Qué acción recomendarías?</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+    <h3>Librerías necesarias</h3>
+    <p style="font-family:monospace; background:#F0F0F0; padding:12px 16px; border-radius:4px; font-size:12.5px; color:#333;">
+      pip install pandas numpy matplotlib seaborn scikit-learn xgboost lightgbm shap optuna
+    </p>
+  </section>
+
+</div>
+
+<footer>
+  Masterclass en Data Science · Máster en IA y Data Science · Septiembre 2026
+</footer>
+
+</body>
+</html>
